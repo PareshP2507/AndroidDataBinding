@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.psquare.databinding"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.design
+    implementation supportDependencies.timber
+    implementation supportDependencies.retrofit
+    implementation supportDependencies.gson_convertor
+    implementation supportDependencies.rxAdapter
+    implementation supportDependencies.okHttpInterceptor
+    implementation supportDependencies.rxAndrod
+    implementation supportDependencies.rxJava
+    implementation supportDependencies.glide
+    annotationProcessor supportDependencies.glideCompiler
+}

@@ -1,0 +1,38 @@
+ext {
+
+    // Versions
+    supportVersion   = '27.0.0'
+    timberVersion    = '4.6.0'
+    retroVersion     = '2.3.0'
+    interceptVersion = '3.9.1'
+    reactiveVersion  = '2.0.1'
+    rxVersion        = '2.1.8'
+    glideVersion     = '4.6.1'
+
+    // Packages
+    supportPackage = 'com.android.support'
+    timberPackage  = 'com.jakewharton.timber'
+    retroPackage   = 'com.squareup.retrofit2'
+    okHttpPackage  = 'com.squareup.okhttp3'
+    rxPackage      = 'io.reactivex.rxjava2'
+    glidePackage   = 'com.github.bumptech.glide'
+
+    supportDependencies = [
+            appCompat          : buildDependency(supportPackage, 'appcompat-v7', supportVersion),
+            design             : buildDependency(supportPackage, 'design', supportVersion),
+            timber             : buildDependency(timberPackage, 'timber', timberVersion),
+            retrofit           : buildDependency(retroPackage, 'retrofit', retroVersion),
+            gson_convertor     : buildDependency(retroPackage, 'converter-gson', retroVersion),
+            rxAdapter          : buildDependency(retroPackage, 'adapter-rxjava2', retroVersion),
+            okHttpInterceptor  : buildDependency(okHttpPackage, 'logging-interceptor', interceptVersion),
+            rxAndrod           : buildDependency(rxPackage, 'rxandroid', reactiveVersion),
+            rxJava             : buildDependency(rxPackage, 'rxjava', rxVersion),
+            glide              : buildDependency(glidePackage, 'glide', glideVersion),
+            glideCompiler      : buildDependency(glidePackage, 'compiler', glideVersion),
+    ]
+
+}
+
+static buildDependency(String pack, String suffix, String version) {
+    return "${pack}:${suffix}:${version}"
+}
