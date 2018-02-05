@@ -13,84 +13,110 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_collapseMode="pin"
+            app:navigationIcon="@drawable/ic_action_back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_detail"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </android.support.v7.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_collapseMode="parallax">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                app:layout_collapseMode="parallax">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/following"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/shape_circle_placeholder"
+                    android:contentDescription="@null"
+                    app:error="@{@drawable/shape_circle_placeholder}"
+                    app:imageUrl="@{user.avatarUrl}"
+                    app:layout_collapseMode="parallax"
+                    app:placeholder="@{@drawable/shape_circle_placeholder}" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/following"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="parallax">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/following"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="84dp"
-                android:layout_height="84dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/shape_circle_placeholder"
-                android:contentDescription="@null"
-                app:error="@{@drawable/shape_circle_placeholder}"
-                app:imageUrl="@{user.avatarUrl}"
-                app:placeholder="@{@drawable/shape_circle_placeholder}" />
-
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/following"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="@{user.login}"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="@{user.login}"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
 
     </LinearLayout>
 </layout>

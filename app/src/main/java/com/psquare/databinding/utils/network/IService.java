@@ -7,6 +7,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by PARESH ANDROID on 4/7/2017
@@ -18,4 +19,7 @@ public interface IService {
 
     @GET("users")
     Observable<List<User>> getAllUsers(@Query("since") String lastUserId);
+
+    @GET
+    Observable<List<User>> getFollowingCount(@Url String url);
 }

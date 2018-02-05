@@ -19,6 +19,7 @@ ext {
 
     supportDependencies = [
             appCompat          : buildDependency(supportPackage, 'appcompat-v7', supportVersion),
+            cardView           : buildDependency(supportPackage, 'cardview-v7', supportVersion),
             design             : buildDependency(supportPackage, 'design', supportVersion),
             timber             : buildDependency(timberPackage, 'timber', timberVersion),
             retrofit           : buildDependency(retroPackage, 'retrofit', retroVersion),
