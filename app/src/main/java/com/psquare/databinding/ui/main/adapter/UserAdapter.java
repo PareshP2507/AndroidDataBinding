@@ -1,4 +1,4 @@
-package com.psquare.databinding.ui.adapter;
+package com.psquare.databinding.ui.main.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;

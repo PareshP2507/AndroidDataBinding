@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.psquare.databinding.R;
 import com.psquare.databinding.databinding.ActivityMainBinding;
-import com.psquare.databinding.ui.adapter.UserAdapter;
+import com.psquare.databinding.ui.main.adapter.UserAdapter;
 import com.psquare.databinding.ui.main.model.User;
 
 import java.util.ArrayList;
