@@ -1,5 +1,6 @@
 package com.psquare.databinding.ui.main;
 
+import com.psquare.databinding.ui.BasePresenter;
 import com.psquare.databinding.ui.main.model.User;
 import com.psquare.databinding.utils.network.IService;
 
@@ -16,13 +17,14 @@ import timber.log.Timber;
  * Created by Paresh on 04-02-2018
  */
 
-public class MainPresenter implements MainContract.Presenter {
+public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter {
 
     private final MainContract.View mView;
     private final IService service;
     private CompositeDisposable disposable;
 
     public MainPresenter(MainContract.View mView, IService service) {
+        super(mView);
         this.mView = mView;
         this.service = service;
         this.disposable = new CompositeDisposable();
@@ -30,7 +32,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void getAllUsers(String since) {
-        mView.showLoader();
+        if (since.equals("0")) mView.showLoader();
         service.getAllUsers(since)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -42,15 +44,19 @@ public class MainPresenter implements MainContract.Presenter {
 
                     @Override
                     public void onNext(List<User> users) {
-                        mView.hideLoader();
-                        mView.onUserRetrieval(users);
+                        if (isViewAttached()) {
+                            if (since.equals("0"))mView.hideLoader();
+                            mView.onUserRetrieval(users);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Timber.e("Error on user retrieval: %s", e.getMessage());
-                        mView.hideLoader();
-                        mView.onError(e.getMessage());
+                        if (isViewAttached()) {
+                            if (since.equals("0"))mView.hideLoader();
+                            mView.onError(e.getMessage());
+                        }
                     }
 
                     @Override
@@ -62,6 +68,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void clear() {
+        super.detachView();
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }

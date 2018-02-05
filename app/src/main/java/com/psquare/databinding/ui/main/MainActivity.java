@@ -1,24 +1,31 @@
 package com.psquare.databinding.ui.main;
 
 import android.databinding.DataBindingUtil;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.psquare.databinding.R;
 import com.psquare.databinding.databinding.ActivityMainBinding;
+import com.psquare.databinding.ui.BaseActivity;
+import com.psquare.databinding.ui.interf.OnLoadMoreListener;
 import com.psquare.databinding.ui.main.adapter.UserAdapter;
 import com.psquare.databinding.ui.main.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View, OnLoadMoreListener {
 
     private ActivityMainBinding mBinding;
     private MainPresenter presenter;
     private UserAdapter adapter;
     private List<User> mDataSet = new ArrayList<>();
+    private int since = 0;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void iniImpl() {
@@ -26,11 +33,16 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mBinding.recyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         );
-        adapter = new UserAdapter(mDataSet);
+        adapter = new UserAdapter(mBinding.recyclerView, mDataSet, this);
         mBinding.recyclerView.setAdapter(adapter);
         presenter = new MainPresenter(this, service);
+        presenter.attachView(this);
 
-        presenter.getAllUsers(String.valueOf(0));
+        loadUsers();
+    }
+
+    private void loadUsers() {
+        presenter.getAllUsers(String.valueOf(since));
     }
 
     @Override
@@ -45,8 +57,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void onUserRetrieval(List<User> userList) {
-        mDataSet.addAll(userList);
-        adapter.notifyDataSetChanged();
+        if (since != 0) {
+            mDataSet.remove(mDataSet.size() - 1);
+            adapter.notifyItemRemoved(mDataSet.size());
+        }
+        new Thread(() -> {
+            for (User user : userList) {
+                mDataSet.add(user);
+                mHandler.post(() -> adapter.notifyItemInserted(mDataSet.size() - 1));
+            }
+        }).start();
+
+        since = userList.get(userList.size() - 1).getId();
+        adapter.setLoaded();
     }
 
     @Override
@@ -56,8 +79,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Override
     protected void onDestroy() {
+        adapter.clear();
         presenter.clear();
+        mHandler.removeCallbacksAndMessages(null);
         mBinding.unbind();
         super.onDestroy();
+    }
+
+    @Override
+    public void onLoadMore() {
+        mDataSet.add(null);
+        mHandler.post(() -> adapter.notifyItemInserted(mDataSet.size() - 1));
+        loadUsers();
     }
 }

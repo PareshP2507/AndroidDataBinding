@@ -1,4 +1,4 @@
-package com.psquare.databinding.ui.main;
+package com.psquare.databinding.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

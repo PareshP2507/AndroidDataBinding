@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.psquare.databinding.R;
+import com.psquare.databinding.databinding.RowProgressBinding;
 import com.psquare.databinding.databinding.RowUserBinding;
+import com.psquare.databinding.ui.BaseRecyclerAdapter;
+import com.psquare.databinding.ui.interf.OnLoadMoreListener;
 import com.psquare.databinding.ui.main.model.User;
 
 import java.util.List;
@@ -15,20 +18,32 @@ import java.util.List;
  * Created by Paresh on 04-02-2018
  */
 
-public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class UserAdapter extends BaseRecyclerAdapter {
 
     private List<User> mData;
 
-    public UserAdapter(List<User> mData) {
+    public UserAdapter(RecyclerView recyclerView,
+                       List<User> mData, OnLoadMoreListener onLoadMoreListener) {
         this.mData = mData;
+        super.attachRecyclerView(recyclerView, onLoadMoreListener);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RowUserBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()), R.layout.row_user, parent, false
-        );
-        return new UserHolder(binding);
+        switch (viewType) {
+            case TYPE_LOADER:
+                RowProgressBinding binding1 = DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.getContext()), R.layout.row_progress, parent, false
+                );
+                return new ProgressHolder(binding1);
+            case TYPE_ITEM:
+                RowUserBinding binding = DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.getContext()), R.layout.row_user, parent, false
+                );
+                return new UserHolder(binding);
+            default:
+                return null;
+        }
     }
 
     @Override
@@ -41,5 +56,18 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mData.get(position) == null ? TYPE_LOADER : TYPE_ITEM;
+    }
+
+    public void clear() {
+        super.clear();
+    }
+
+    public void setLoaded() {
+        super.setLoaded();
     }
 }
