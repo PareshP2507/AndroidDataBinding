@@ -1,5 +1,7 @@
 package com.psquare.databinding.ui.main;
 
+import android.content.Context;
+
 import com.psquare.databinding.ui.main.model.User;
 
 import java.util.List;
@@ -19,6 +21,8 @@ public class MainContract {
         void onUserRetrieval(List<User> userList);
 
         void onError(String message);
+
+        Context getContext();
     }
 
     interface Presenter {
@@ -26,5 +30,7 @@ public class MainContract {
         void getAllUsers(String since);
 
         void clear();
+
+        void handleRowClick(User user);
     }
 }

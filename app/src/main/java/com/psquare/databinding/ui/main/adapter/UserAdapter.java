@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Paresh on 04-02-2018
  */
 
-public class UserAdapter extends BaseRecyclerAdapter {
+public abstract class UserAdapter extends BaseRecyclerAdapter {
 
     private List<User> mData;
 
@@ -40,7 +40,12 @@ public class UserAdapter extends BaseRecyclerAdapter {
                 RowUserBinding binding = DataBindingUtil.inflate(
                         LayoutInflater.from(parent.getContext()), R.layout.row_user, parent, false
                 );
-                return new UserHolder(binding);
+                return new UserHolder(binding) {
+                    @Override
+                    void onRowClick(int position) {
+                        onItemClick(mData.get(position));
+                    }
+                };
             default:
                 return null;
         }
@@ -70,4 +75,6 @@ public class UserAdapter extends BaseRecyclerAdapter {
     public void setLoaded() {
         super.setLoaded();
     }
+
+    protected abstract void onItemClick(User user);
 }

@@ -1,6 +1,9 @@
 package com.psquare.databinding.ui.main;
 
+import android.content.Intent;
+
 import com.psquare.databinding.ui.BasePresenter;
+import com.psquare.databinding.ui.detail.DetailActivity;
 import com.psquare.databinding.ui.main.model.User;
 import com.psquare.databinding.utils.network.IService;
 
@@ -71,6 +74,16 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
         super.detachView();
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
+        }
+    }
+
+    @Override
+    public void handleRowClick(User user) {
+        if (isViewAttached()) {
+            mView.getContext().startActivity(
+                    new Intent(mView.getContext(), DetailActivity.class)
+                    .putExtra(DetailActivity.ARG_USER, user)
+            );
         }
     }
 }

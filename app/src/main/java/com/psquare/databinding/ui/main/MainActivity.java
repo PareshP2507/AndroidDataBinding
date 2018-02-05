@@ -1,5 +1,6 @@
 package com.psquare.databinding.ui.main;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,7 +34,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, OnL
         mBinding.recyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         );
-        adapter = new UserAdapter(mBinding.recyclerView, mDataSet, this);
+        adapter = new UserAdapter(mBinding.recyclerView, mDataSet, this) {
+            @Override
+            protected void onItemClick(User user) {
+                presenter.handleRowClick(user);
+            }
+        };
         mBinding.recyclerView.setAdapter(adapter);
         presenter = new MainPresenter(this, service);
         presenter.attachView(this);
@@ -75,6 +81,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, OnL
     @Override
     public void onError(String message) {
         Snackbar.make(mBinding.recyclerView, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     @Override
