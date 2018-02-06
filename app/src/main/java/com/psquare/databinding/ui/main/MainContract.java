@@ -31,6 +31,6 @@ public class MainContract {
 
         void clear();
 
-        void handleRowClick(User user);
+        void handleRowClick(User user, android.view.View view);
     }
 }

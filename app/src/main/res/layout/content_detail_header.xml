@@ -66,6 +66,7 @@
                     app:error="@{@drawable/shape_circle_placeholder}"
                     app:imageUrl="@{user.avatarUrl}"
                     app:layout_collapseMode="parallax"
+                    android:transitionName="pic_trans"
                     app:placeholder="@{@drawable/shape_circle_placeholder}" />
 
                 <LinearLayout

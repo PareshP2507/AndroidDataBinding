@@ -17,7 +17,7 @@ abstract class UserHolder extends RecyclerView.ViewHolder {
     UserHolder(RowUserBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
-        this.binding.getRoot().setOnClickListener(v -> onRowClick(getAdapterPosition()));
+        this.binding.getRoot().setOnClickListener(v -> onRowClick(getAdapterPosition(), binding.ivPic));
     }
 
     void bind(User user) {
@@ -25,5 +25,5 @@ abstract class UserHolder extends RecyclerView.ViewHolder {
         binding.executePendingBindings();
     }
 
-    abstract void onRowClick(int position);
+    abstract void onRowClick(int position, View view);
 }

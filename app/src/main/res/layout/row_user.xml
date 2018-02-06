@@ -26,6 +26,7 @@
             android:paddingTop="8dp">
 
             <ImageView
+                android:id="@+id/ivPic"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_gravity="center_vertical"
@@ -33,6 +34,7 @@
                 android:scaleType="centerCrop"
                 app:error="@{@drawable/shape_circle_placeholder}"
                 app:imageUrl="@{user.avatarUrl}"
+                android:transitionName="pic_trans"
                 app:placeholder="@{@drawable/shape_circle_placeholder}" />
 
             <LinearLayout

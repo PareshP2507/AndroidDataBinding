@@ -3,6 +3,7 @@ package com.psquare.databinding.ui.main.adapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.psquare.databinding.R;
@@ -42,8 +43,8 @@ public abstract class UserAdapter extends BaseRecyclerAdapter {
                 );
                 return new UserHolder(binding) {
                     @Override
-                    void onRowClick(int position) {
-                        onItemClick(mData.get(position));
+                    void onRowClick(int position, View v) {
+                        onItemClick(mData.get(position), v);
                     }
                 };
             default:
@@ -76,5 +77,5 @@ public abstract class UserAdapter extends BaseRecyclerAdapter {
         super.setLoaded();
     }
 
-    protected abstract void onItemClick(User user);
+    protected abstract void onItemClick(User user, View view);
 }

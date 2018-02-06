@@ -31,7 +31,7 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     protected void iniImpl() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         // Set Navigation Click listener to toolbar
-        mBinding.setNavClickListener(v -> onBackPressed());
+        mBinding.setNavClickListener(v -> supportFinishAfterTransition());
 
         // Initializing presenter
         presenter = new DetailPresenter(this, service);

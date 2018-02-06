@@ -36,8 +36,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, OnL
         );
         adapter = new UserAdapter(mBinding.recyclerView, mDataSet, this) {
             @Override
-            protected void onItemClick(User user) {
-                presenter.handleRowClick(user);
+            protected void onItemClick(User user, View v) {
+                presenter.handleRowClick(user, v);
             }
         };
         mBinding.recyclerView.setAdapter(adapter);

@@ -1,7 +1,10 @@
 package com.psquare.databinding.ui.main;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.view.View;
 
+import com.psquare.databinding.R;
 import com.psquare.databinding.ui.BasePresenter;
 import com.psquare.databinding.ui.SimpleObserver;
 import com.psquare.databinding.ui.detail.DetailActivity;
@@ -74,12 +77,14 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
     }
 
     @Override
-    public void handleRowClick(User user) {
+    public void handleRowClick(User user, View view) {
         if (isViewAttached()) {
-            mView.getContext().startActivity(
-                    new Intent(mView.getContext(), DetailActivity.class)
-                    .putExtra(DetailActivity.ARG_USER, user)
+            Intent intent = new Intent(mView.getContext(), DetailActivity.class);
+            intent.putExtra(DetailActivity.ARG_USER, user);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    ((MainActivity) mView.getContext()), view, "pic_trans"
             );
+            mView.getContext().startActivity(intent, options.toBundle());
         }
     }
 }

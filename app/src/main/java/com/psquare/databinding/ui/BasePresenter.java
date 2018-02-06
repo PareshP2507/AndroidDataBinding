@@ -4,7 +4,6 @@ package com.psquare.databinding.ui;
  * class is responsible for handling LifeCycleEvents to prevent unnecessary crashes.
  * For example, Suppose you have to process network result on mainThread and Activity
  * has been destroyed?
- *
  * @author Paresh P.
  */
 
