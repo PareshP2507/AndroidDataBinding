@@ -30,7 +30,10 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
     @Override
     protected void iniImpl() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        // Set Navigation Click listener to toolbar
+        mBinding.setNavClickListener(v -> onBackPressed());
 
+        // Initializing presenter
         presenter = new DetailPresenter(this, service);
         presenter.attachView(this);
         mBinding.recyclerView.setLayoutManager(
@@ -39,14 +42,16 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
         userDetailList = new ArrayList<>();
         detailAdapter = new UserDetailAdapter(userDetailList);
         mBinding.recyclerView.setAdapter(detailAdapter);
+
+        // Let's command presenter to process intent extras
         presenter.getIntentExtras();
     }
 
     @Override
     protected void onDestroy() {
-        presenter.detachView();
-        presenter.clear();
-        mBinding.unbind();
+        presenter.detachView(); // detachView from presenter
+        presenter.clear();      // Clearing presenter stuffs
+        mBinding.unbind();      // unbind
         super.onDestroy();
     }
 
@@ -57,9 +62,10 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
 
     @Override
     public void onUserRetrieval(User user) {
-        mBinding.setUser(user);
-        mBinding.executePendingBindings();
+        mBinding.setUser(user); // Setting variable to binding
+        mBinding.executePendingBindings(); // Forcing bindings
 
+        // Filling up user info to recyclerView
         userDetailList.add(user.getGistsUrl());
         userDetailList.add(user.getHtmlUrl());
         userDetailList.add(user.getOrganizationsUrl());
@@ -70,7 +76,19 @@ public class DetailActivity extends BaseActivity implements DetailContract.View 
 
         detailAdapter.notifyDataSetChanged();
 
+        /*
+        * Command presenter to get count of following users and followers
+        * I'm getting all users from urls given by github allUsers service
+        * count will be, number of  records in the response
+        */
         presenter.getFollowingCount(user);
+    }
+
+    @Override
+    public void onFollowerCountRetrieval(List<Integer> count) {
+        // Setting Followers and following count
+        mBinding.includedHeader.tvFollowers.setText(String.valueOf(count.get(0)));
+        mBinding.includedHeader.tvFollowing.setText(String.valueOf(count.get(1)));
     }
 
     @Override

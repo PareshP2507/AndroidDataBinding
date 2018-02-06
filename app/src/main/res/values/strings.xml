@@ -3,4 +3,6 @@
     <string name="following">Following</string>
     <string name="invalid_user">Invalid user</string>
     <string name="user_detail">User Detail</string>
+    <string name="followers">Followers</string>
+    <string name="users">Users</string>
 </resources>

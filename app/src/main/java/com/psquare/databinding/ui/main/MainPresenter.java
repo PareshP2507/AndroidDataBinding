@@ -3,6 +3,7 @@ package com.psquare.databinding.ui.main;
 import android.content.Intent;
 
 import com.psquare.databinding.ui.BasePresenter;
+import com.psquare.databinding.ui.SimpleObserver;
 import com.psquare.databinding.ui.detail.DetailActivity;
 import com.psquare.databinding.ui.main.model.User;
 import com.psquare.databinding.utils.network.IService;
@@ -39,7 +40,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
         service.getAllUsers(since)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<User>>() {
+                .subscribe(new SimpleObserver<List<User>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposable.add(d);
@@ -60,11 +61,6 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                             if (since.equals("0"))mView.hideLoader();
                             mView.onError(e.getMessage());
                         }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }

@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 public class BindingAdapter {
 
-    @android.databinding.BindingAdapter({"bind:imageUrl", "bind:placeholder" , "bind:error"})
+    @android.databinding.BindingAdapter({"imageUrl", "placeholder" , "error"})
     public static void loadUserImage(ImageView imageView, String url, Drawable placeHolder, Drawable error) {
         Glide.with(imageView)
                 .load(url)

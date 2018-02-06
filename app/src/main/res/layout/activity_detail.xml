@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="navClickListener"
+            type="android.view.View.OnClickListener" />
 
         <variable
             name="user"
@@ -20,14 +23,28 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentScrim="@android:color/white"
+                app:contentScrim="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
+                app:scrimAnimationDuration="100"
                 app:statusBarScrim="@color/colorPrimary"
-                app:titleEnabled="false">
+                app:titleEnabled="false"
+                app:toolbarId="@+id/mToolbar">
 
                 <include
+                    android:id="@+id/includedHeader"
                     layout="@layout/content_detail_header"
                     app:user="@{user}" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/mToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentInsetStartWithNavigation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_action_back"
+                    app:title="@string/user_detail"
+                    app:NavigationOnClickListener="@{navClickListener}"
+                    app:titleTextColor="@android:color/white" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -37,6 +54,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="6dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </android.support.design.widget.CoordinatorLayout>
